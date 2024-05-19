@@ -1,12 +1,30 @@
-[gd_scene load_steps=5 format=3 uid="uid://u2wpji0205vy"]
+[gd_scene load_steps=6 format=3 uid="uid://u2wpji0205vy"]
 
 [ext_resource type="PackedScene" uid="uid://cgvlf22a30nqd" path="res://Scenes/RigidNode.tscn" id="1"]
 [ext_resource type="Script" path="res://Script/RigidSim.gd" id="2"]
 [ext_resource type="Script" path="res://Script/CameraTrack.gd" id="2_8ncgo"]
+[ext_resource type="Script" path="res://Scenes/NodeCollection.gd" id="2_of2h8"]
 [ext_resource type="Script" path="res://Script/Info.gd" id="3_lon2u"]
 
 [node name="RigidSim" type="Node2D"]
 script = ExtResource("2")
+
+[node name="NodeCollection" type="Node2D" parent="."]
+script = ExtResource("2_of2h8")
+
+[node name="TemplateNode" parent="NodeCollection" instance=ExtResource("1")]
+visible = false
+gravity_scale = 10.0
+
+[node name="Center" parent="NodeCollection" instance=ExtResource("1")]
+disable_mode = 1
+gravity_scale = 0.0
+size = 2.0
+node_name = "CENTER"
+
+[node name="RigidNode" parent="NodeCollection" instance=ExtResource("1")]
+position = Vector2(-443, 208)
+node_name = "TEST1"
 
 [node name="CameraTrack" type="Node2D" parent="."]
 script = ExtResource("2_8ncgo")
@@ -29,6 +47,7 @@ offset_right = 1155.0
 offset_bottom = 650.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("3_lon2u")
 metadata/_edit_lock_ = true
 
@@ -56,14 +75,16 @@ grow_horizontal = 2
 text = "qweqweqe"
 metadata/_edit_lock_ = true
 
-[node name="TemplateNode" parent="." instance=ExtResource("1")]
-visible = false
-gravity_scale = 10.0
+[node name="size_slide" type="HSlider" parent="CameraTrack/Camera2D/Info/Panel"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 62.0
+offset_right = 247.0
+offset_bottom = 78.0
+min_value = 5.0
+max_value = 40.0
+value = 10.0
 
-[node name="Center" parent="." instance=ExtResource("1")]
-visible = false
-gravity_scale = 0.0
-
-[node name="RigidNode" parent="." instance=ExtResource("1")]
-visible = false
-position = Vector2(-443, 208)
+[connection signal="node_selected" from="NodeCollection/Center" to="CameraTrack/Camera2D/Info" method="set_node"]
+[connection signal="node_selected" from="NodeCollection/RigidNode" to="CameraTrack/Camera2D/Info" method="set_node"]
+[connection signal="value_changed" from="CameraTrack/Camera2D/Info/Panel/size_slide" to="CameraTrack/Camera2D/Info" method="_on_size_slide_value_changed"]
