@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://u2wpji0205vy"]
+
+[ext_resource type="PackedScene" uid="uid://cgvlf22a30nqd" path="res://Scenes/RigidNode.tscn" id="1"]
+[ext_resource type="Script" path="res://Script/RigidSim.gd" id="2"]
+[ext_resource type="Script" path="res://Script/Camera2D.gd" id="3_xrsqv"]
+
+[node name="RigidSim" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1200.0
+offset_top = -800.0
+offset_right = 1200.0
+offset_bottom = 800.0
+script = ExtResource("2")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(1200, 800)
+script = ExtResource("3_xrsqv")
+
+[node name="Info" type="Control" parent="Camera2D"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -557.0
+offset_top = -302.0
+offset_right = -319.0
+offset_bottom = 304.0
+
+[node name="NodeName" type="Label" parent="Camera2D/Info"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "qweqweqe"
+
+[node name="TemplateNode" parent="." instance=ExtResource("1")]
+visible = false
+gravity_scale = 10.0
+
+[node name="Center" parent="." instance=ExtResource("1")]
+position = Vector2(1200, 800)
+gravity_scale = 0.0
+
+[node name="RigidNode" parent="." instance=ExtResource("1")]
+position = Vector2(937, 700)

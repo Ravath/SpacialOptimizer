@@ -1,0 +1,77 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://Scenes/NodeControl.tscn" id="1"]
+[ext_resource type="Script" path="res://Script/Interface.gd" id="2"]
+
+[node name="Interface" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NodeControl" parent="." instance=ExtResource( 1 )]
+visible = false
+position = Vector2( 36.8654, -35.6762 )
+scale = Vector2( 0.2, 0.2 )
+
+[node name="center" type="Marker2D" parent="."]
+position = Vector2( 549.414, 306.815 )
+
+[node name="NodePanel" type="Panel" parent="."]
+offset_right = 153.0
+offset_bottom = 148.0
+
+[node name="Label" type="Label" parent="NodePanel"]
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 8.0
+offset_right = 59.0
+offset_bottom = -7.0
+text = "Size
+
+Color
+
+Fixed"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckBox" type="CheckBox" parent="NodePanel"]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -37.9462
+offset_top = 70.2944
+offset_right = -13.9462
+offset_bottom = 94.2944
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="NodePanel"]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -92.9975
+offset_top = 38.7276
+offset_right = -12.9975
+offset_bottom = 58.7276
+
+[node name="HSlider" type="HSlider" parent="NodePanel"]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -105.694
+offset_top = 9.37124
+offset_right = -9.69394
+offset_bottom = 25.3712
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+
+[node name="TextEdit" type="TextEdit" parent="NodePanel"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -40.0
+offset_right = -9.0
+offset_bottom = -18.0
+text = "NodeName"
+[connection signal="gui_input" from="." to="." method="_on_Interface_gui_input"]
