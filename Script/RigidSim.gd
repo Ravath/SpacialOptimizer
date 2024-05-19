@@ -1,4 +1,4 @@
-extends Control
+extends Node2D
 
 const MIN_FORCE = -10
 const MAX_FORCE = 10
@@ -51,10 +51,12 @@ func create_test_nodes():
 	var NBR_FRIENDS = 2
 	var NBR_FOES = 3
 	
+	var spwansize = Vector2(1600,800)
+	
 	# instanciate a bunch of nodes
 	for _i in range(NBR_NODES):
-		var randX = rng.randf_range(0.0, size.x)
-		var randY = rng.randf_range(0.0, size.y)
+		var randX = rng.randf_range(0.0, spwansize.x) - spwansize.x/2
+		var randY = rng.randf_range(0.0, spwansize.y) - spwansize.y/2
 		add_sim_node(Vector2(randX, randY))
 	
 	# link the nodes with forces

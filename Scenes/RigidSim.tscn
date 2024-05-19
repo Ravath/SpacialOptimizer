@@ -1,43 +1,69 @@
-[gd_scene load_steps=4 format=3 uid="uid://u2wpji0205vy"]
+[gd_scene load_steps=5 format=3 uid="uid://u2wpji0205vy"]
 
 [ext_resource type="PackedScene" uid="uid://cgvlf22a30nqd" path="res://Scenes/RigidNode.tscn" id="1"]
 [ext_resource type="Script" path="res://Script/RigidSim.gd" id="2"]
-[ext_resource type="Script" path="res://Script/Camera2D.gd" id="3_xrsqv"]
+[ext_resource type="Script" path="res://Script/CameraTrack.gd" id="2_8ncgo"]
+[ext_resource type="Script" path="res://Script/Info.gd" id="3_lon2u"]
 
-[node name="RigidSim" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -1200.0
-offset_top = -800.0
-offset_right = 1200.0
-offset_bottom = 800.0
+[node name="RigidSim" type="Node2D"]
 script = ExtResource("2")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(1200, 800)
-script = ExtResource("3_xrsqv")
+[node name="CameraTrack" type="Node2D" parent="."]
+script = ExtResource("2_8ncgo")
+metadata/_edit_use_anchors_ = true
 
-[node name="Info" type="Control" parent="Camera2D"]
+[node name="Camera2D" type="Camera2D" parent="CameraTrack"]
+position = Vector2(-600, -300)
+anchor_mode = 0
+position_smoothing_speed = 20.0
+metadata/_edit_lock_ = true
+
+[node name="Info" type="Control" parent="CameraTrack/Camera2D"]
 layout_mode = 3
-anchors_preset = 0
-offset_left = -557.0
-offset_top = -302.0
-offset_right = -319.0
-offset_bottom = 304.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 1155.0
+offset_bottom = 650.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_lon2u")
+metadata/_edit_lock_ = true
 
-[node name="NodeName" type="Label" parent="Camera2D/Info"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="Panel" type="Panel" parent="CameraTrack/Camera2D/Info"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 14.0
+offset_right = -877.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_lock_ = true
+
+[node name="NodeName" type="Label" parent="CameraTrack/Camera2D/Info/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 27.0
+grow_horizontal = 2
 text = "qweqweqe"
+metadata/_edit_lock_ = true
 
 [node name="TemplateNode" parent="." instance=ExtResource("1")]
 visible = false
 gravity_scale = 10.0
 
 [node name="Center" parent="." instance=ExtResource("1")]
-position = Vector2(1200, 800)
+visible = false
 gravity_scale = 0.0
 
 [node name="RigidNode" parent="." instance=ExtResource("1")]
-position = Vector2(937, 700)
+visible = false
+position = Vector2(-443, 208)
