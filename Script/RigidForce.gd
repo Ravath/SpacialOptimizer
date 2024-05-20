@@ -28,8 +28,16 @@ func _init(t1=null, t2=null, new_force = 1):
 	
 	# Force
 	force = new_force
+	targetA.forces.append(self)
+	targetB.forces.append(self)
 
 func apply_forces():
+	if not targetA :
+		print(targetB.node_name)
+		return
+	if not targetB :
+		print(targetA.node_name)
+		return
 	var direction = targetB.position - targetA.position
 	var dist = direction.length ()
 	direction = direction.normalized()

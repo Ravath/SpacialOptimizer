@@ -17,10 +17,10 @@ visible = false
 gravity_scale = 10.0
 
 [node name="Center" parent="NodeCollection" instance=ExtResource("1")]
-disable_mode = 1
 gravity_scale = 0.0
-size = 2.0
 node_name = "CENTER"
+size = 2.0
+fixed = true
 
 [node name="RigidNode" parent="NodeCollection" instance=ExtResource("1")]
 position = Vector2(-443, 208)

@@ -16,6 +16,6 @@ void fragment() {
 
 [resource]
 shader = SubResource("1")
-shader_parameter/green = 0.5
-shader_parameter/red = 0.5
-shader_parameter/blue = 0.5
+shader_parameter/green = 0.6
+shader_parameter/red = 0.6
+shader_parameter/blue = 0.2
