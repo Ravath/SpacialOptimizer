@@ -28,9 +28,6 @@ func _ready():
 	set_color(color)
 	if fixed :
 		fixed_position = self.position
-		#self.set_mode( FREEZE_MODE_STATIC )
-		#self.set_freeze.mode(RigidBody2D.FREEZE_MODE_STATIC) 
-	pass # Replace with function body.
 
 func set_size(new_size) :
 	size = new_size
@@ -39,6 +36,7 @@ func set_size(new_size) :
 	$Sprite2D.scale = Vector2(size, size)
 	$CollisionShape2D.scale = Vector2(size, size)
 	$Area2D.scale = Vector2(size, size)
+	$Area2D.gravity_point_unit_distance = $Control.size.x / 2
 
 func set_color(new_color) :
 	color = new_color
@@ -47,6 +45,12 @@ func set_color(new_color) :
 func set_fixed(new_fixed) :
 	fixed = new_fixed
 	fixed_position = position
+
+func get_gravity() :
+	return $Area2D.gravity
+
+func set_gravity(new_gravity) :
+	$Area2D.gravity = new_gravity
 
 func _process(_delta):
 	# if is dragged by the mouse, follow the mouse position

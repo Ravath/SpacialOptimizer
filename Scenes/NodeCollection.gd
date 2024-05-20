@@ -155,6 +155,26 @@ func delete_node(node_to_delete) :
 		f.targetB = null
 	node_to_delete.queue_free()
 
+func reset() :
+	for n in nodes :
+		n.queue_free()
+	nodes.clear()
+	forces.clear()
+	center_forces.clear()
+	if not get_node_or_null("Center") :
+		var n = $TemplateNode.duplicate(DUPLICATE_SIGNALS|DUPLICATE_GROUPS|DUPLICATE_SCRIPTS|DUPLICATE_USE_INSTANTIATION)
+		n.visible = true
+		n.name = "Center"
+		add_child(n, true)
+		# connect selection event
+		n.connect("node_selected", get_parent().info_panel.set_node)
+	else :
+		$Center.forces.clear()
+	$Center.set_position(Vector2(0, 0))
+	$Center.set_size(2)
+	$Center.set_fixed(true)
+	$Center.node_name = "CENTER"
+
 func create_test_nodes():
 	rng.randomize()
 	

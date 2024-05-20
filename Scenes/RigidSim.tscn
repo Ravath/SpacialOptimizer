@@ -1,10 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://u2wpji0205vy"]
+[gd_scene load_steps=8 format=3 uid="uid://u2wpji0205vy"]
 
 [ext_resource type="PackedScene" uid="uid://cgvlf22a30nqd" path="res://Scenes/RigidNode.tscn" id="1"]
 [ext_resource type="Script" path="res://Script/RigidSim.gd" id="2"]
 [ext_resource type="Script" path="res://Script/CameraTrack.gd" id="2_8ncgo"]
 [ext_resource type="Script" path="res://Scenes/NodeCollection.gd" id="2_of2h8"]
 [ext_resource type="Script" path="res://Script/Info.gd" id="3_lon2u"]
+[ext_resource type="Texture2D" uid="uid://dugi8g610plyl" path="res://Ressources/circle.png" id="6_tdrqb"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fbsn3"]
+font_size = 47
+font_color = Color(0.0941176, 0.105882, 0.141176, 1)
 
 [node name="RigidSim" type="Node2D"]
 script = ExtResource("2")
@@ -21,10 +26,6 @@ gravity_scale = 0.0
 node_name = "CENTER"
 size = 2.0
 fixed = true
-
-[node name="RigidNode" parent="NodeCollection" instance=ExtResource("1")]
-position = Vector2(-443, 208)
-node_name = "TEST1"
 
 [node name="CameraTrack" type="Node2D" parent="."]
 script = ExtResource("2_8ncgo")
@@ -66,25 +67,69 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_edit_lock_ = true
 
-[node name="NodeName" type="Label" parent="CameraTrack/Camera2D/Info/Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CameraTrack/Camera2D/Info/Panel"]
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 15
 anchor_right = 1.0
-offset_bottom = 27.0
+anchor_bottom = 1.0
 grow_horizontal = 2
-text = "qweqweqe"
-metadata/_edit_lock_ = true
+grow_vertical = 2
 
-[node name="size_slide" type="HSlider" parent="CameraTrack/Camera2D/Info/Panel"]
-layout_mode = 0
-offset_left = 13.0
-offset_top = 62.0
-offset_right = 247.0
-offset_bottom = 78.0
+[node name="NodeName" type="LineEdit" parent="CameraTrack/Camera2D/Info/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="size_slide" type="HSlider" parent="CameraTrack/Camera2D/Info/Panel/VBoxContainer"]
+layout_mode = 2
 min_value = 5.0
 max_value = 40.0
 value = 10.0
 
+[node name="gravity_slide" type="HSlider" parent="CameraTrack/Camera2D/Info/Panel/VBoxContainer"]
+layout_mode = 2
+min_value = -2000.0
+max_value = 2000.0
+step = 10.0
+
+[node name="node_color" type="ColorPickerButton" parent="CameraTrack/Camera2D/Info/Panel/VBoxContainer"]
+layout_mode = 2
+text = "COLOR"
+color = Color(0.435294, 0.435294, 0.435294, 1)
+
+[node name="NodeForces" type="Label" parent="CameraTrack/Camera2D/Info/Panel/VBoxContainer"]
+layout_mode = 2
+text = "qweqweqe"
+metadata/_edit_lock_ = true
+
+[node name="sel_dot" type="Sprite2D" parent="CameraTrack/Camera2D/Info"]
+visible = false
+modulate = Color(1, 0, 0, 1)
+z_index = 1
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("6_tdrqb")
+
+[node name="hovering_dot" type="Sprite2D" parent="."]
+modulate = Color(0, 1, 0, 1)
+z_index = 1
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("6_tdrqb")
+
+[node name="Label" type="Label" parent="hovering_dot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 3.0
+offset_top = -122.0
+offset_right = 393.0
+offset_bottom = -57.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Node Name	"
+label_settings = SubResource("LabelSettings_fbsn3")
+
 [connection signal="node_selected" from="NodeCollection/Center" to="CameraTrack/Camera2D/Info" method="set_node"]
-[connection signal="node_selected" from="NodeCollection/RigidNode" to="CameraTrack/Camera2D/Info" method="set_node"]
-[connection signal="value_changed" from="CameraTrack/Camera2D/Info/Panel/size_slide" to="CameraTrack/Camera2D/Info" method="_on_size_slide_value_changed"]
+[connection signal="text_changed" from="CameraTrack/Camera2D/Info/Panel/VBoxContainer/NodeName" to="CameraTrack/Camera2D/Info" method="_on_node_name_text_changed"]
+[connection signal="value_changed" from="CameraTrack/Camera2D/Info/Panel/VBoxContainer/size_slide" to="CameraTrack/Camera2D/Info" method="_on_size_slide_value_changed"]
+[connection signal="value_changed" from="CameraTrack/Camera2D/Info/Panel/VBoxContainer/gravity_slide" to="CameraTrack/Camera2D/Info" method="_on_damp_slide_value_changed"]
+[connection signal="color_changed" from="CameraTrack/Camera2D/Info/Panel/VBoxContainer/node_color" to="CameraTrack/Camera2D/Info" method="_on_node_color_color_changed"]

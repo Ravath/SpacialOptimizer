@@ -7,7 +7,7 @@ var current_node_hover = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$NodeCollection.create_test_nodes()
+	#$NodeCollection.create_test_nodes()
 	pass
 
 func _process(_delta) :
@@ -28,6 +28,10 @@ func _process(_delta) :
 		$NodeCollection.duplicate_node(current_node_hover)
 	if Input.is_action_just_pressed("split_node") and current_node_hover :
 		$NodeCollection.split_node(current_node_hover)
+	if Input.is_action_just_pressed("rand_gen") :
+		$NodeCollection.create_test_nodes()
+	if Input.is_action_just_pressed("reset") :
+		$NodeCollection.reset()
 		
 
 func _physics_process(_delta):
@@ -48,3 +52,14 @@ func _physics_process(_delta):
 			current_node_hover = null
 	else:
 		current_node_hover = null
+	
+	# update hovering display
+	if not current_node_hover:
+		$hovering_dot.visible = false
+	else :
+		$hovering_dot.visible = true
+		$hovering_dot.global_position = current_node_hover.global_position
+		$hovering_dot/Label.text = current_node_hover.node_name
+		$hovering_dot/Label.scale = Vector2(
+			1.0/$CameraTrack/Camera2D.zoom.x,
+			1.0/$CameraTrack/Camera2D.zoom.y)
