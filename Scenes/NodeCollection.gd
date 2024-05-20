@@ -51,6 +51,72 @@ func add_sim_node(new_position):
 	
 	# connect selection event
 	n.connect("node_selected", get_parent().info_panel.set_node)
+	
+	return n
+
+func duplicate_node(node_model) :
+	var new_node = add_sim_node(node_model.position + Vector2(2,2))
+	# copy forces
+	for f in node_model.forces :
+		add_force(new_node, f.other(node_model), f.force/VITESSE)
+	# add repulsive forces for them to be 'distinct'
+	add_force(new_node, node_model, -5)
+
+func split_node(node_model) :
+	# TODO : if forces are <= 2 : trivial
+	var clock = []
+	var misc = []
+	for f in node_model.forces :
+		if f.force > 0 and not f.center_force():
+			var direction = f.other(node_model).position - node_model.position
+			var angle = direction.angle() # RADIAN
+			clock.append([angle, f])
+		else :
+			misc.append(f)
+	if clock.size() <= 1 :
+		pass
+	elif clock.size() == 2 :
+		var new_node = add_sim_node(node_model.position + Vector2(2,2))
+		# copy repulsive and center forces
+		for f in misc :
+			if f.force < 0 :
+				add_force(new_node, f.other(node_model), f.force/VITESSE)
+		# one attractive force for each
+		var permute = clock[0][1]
+		permute.change(node_model, new_node)
+	else :
+		var si = find_best_split_index(clock)
+		var new_node = add_sim_node(node_model.position + Vector2(2,2))
+		# copy repulsive and center forces
+		for f in misc :
+			if f.force < 0 :
+				add_force(new_node, f.other(node_model), f.force/VITESSE)
+		# one attractive force for each
+		for i in range(0,si) :
+			var permute = clock[i][1]
+			permute.change(node_model, new_node)
+
+func find_best_split_index(clock) :
+	clock.sort_custom(func custom_comparison(a,b) : return a[0] < b[0])
+	return clock.size() / 2
+	# TODO implement auto split
+	# Auto split intent : test every split angle, and use the one with :
+	# - separating the forces in two groups of similar size
+	# - the 2 normal vectors of the split have the minimum Standard deviation 
+	#	with the vectors of the group pf same orientation.
+	#	(the sum of the 2 SD is minimum)
+	#var best = clock.size()
+	#var best_index = 0
+	#var index0
+	#var index1
+	#for c in clock :
+		#index1 = index0 + 1
+		#for i in range(index1, clock.size()) :
+			#if clock[i][0] > c[0] :
+				#var score = i - index0
+		#var target = c[0] + PI/2
+		#index0 +=1
+	#return 0
 
 func remove_from_array(ar, el) :
 	var index = ar.find(el)

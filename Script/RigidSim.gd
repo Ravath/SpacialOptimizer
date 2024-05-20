@@ -24,6 +24,10 @@ func _process(_delta) :
 		$NodeCollection.add_force(current_node_hover, info_panel.current_node, -1)
 	if Input.is_action_just_pressed("pause") :
 		$NodeCollection.swap_pause()
+	if Input.is_action_just_pressed("duplicate_node") and current_node_hover :
+		$NodeCollection.duplicate_node(current_node_hover)
+	if Input.is_action_just_pressed("split_node") and current_node_hover :
+		$NodeCollection.split_node(current_node_hover)
 		
 
 func _physics_process(_delta):

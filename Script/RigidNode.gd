@@ -48,21 +48,13 @@ func set_fixed(new_fixed) :
 	fixed = new_fixed
 	fixed_position = position
 
-var s = 0
-var mouse_over = false
 func _process(_delta):
 	# if is dragged by the mouse, follow the mouse position
 	if drag :
 		position = start_position + get_global_mouse_position() - drag_start_position
 	elif fixed :
 		position = fixed_position
-	#if node_name == "CENTER" :
-		#if mouse_over:
-			#print("OVER")
-		#else :
-			#print("NOT")
-	mouse_over = false
-#
+
 func _on_Control_gui_input(event):
 	if event is InputEventMouseButton :
 		# If pressed by the mouse, start dragging
@@ -75,5 +67,3 @@ func _on_Control_gui_input(event):
 		if not event.pressed and event.button_index == MOUSE_BUTTON_LEFT :
 			drag = false
 			fixed_position = self.position
-	else :
-		mouse_over = true
