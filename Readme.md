@@ -9,12 +9,12 @@ TODO :
 - Split with angle decided by user
 
 Default shortcuts (QWERTY configuration) :
-- w/s : Attraction/repulsion up/down
-- e : Create node
-- r : Remoce node
-- d : Duplicate node
-- s : Split node
-- f : fix node
-- t : Generate random nodes
-- y : Reset simulation
-- \<space> : pause simulation
+- W/S : Attraction/repulsion up/down
+- E : Create node
+- R : Remove node
+- D : Duplicate node
+- S : Split node
+- F : fix node
+- Ctrl+R : Reset simulation
+- Ctrl+T : Generate random nodes
+- \<Space> : pause simulation
