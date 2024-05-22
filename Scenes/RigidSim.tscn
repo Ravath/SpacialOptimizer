@@ -189,4 +189,8 @@ filters = PackedStringArray("*.save")
 [connection signal="pressed" from="CameraTrack/Camera2D/Info/GeneralContainer/reset_gravity" to="NodeCollection" method="_on_reset_gravity_pressed"]
 [connection signal="confirmed" from="SaveFileDialog" to="." method="_on_save_file_dialog_confirmed"]
 [connection signal="file_selected" from="SaveFileDialog" to="." method="_on_save_file_dialog_file_selected"]
+[connection signal="focus_entered" from="SaveFileDialog" to="." method="_on_node_name_focus_entered"]
+[connection signal="focus_exited" from="SaveFileDialog" to="." method="_on_node_name_focus_exited"]
 [connection signal="file_selected" from="LoadFileDialog" to="." method="_on_load_file_dialog_file_selected"]
+[connection signal="focus_entered" from="LoadFileDialog" to="." method="_on_node_name_focus_entered"]
+[connection signal="focus_exited" from="LoadFileDialog" to="." method="_on_node_name_focus_exited"]
