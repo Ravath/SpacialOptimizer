@@ -52,6 +52,7 @@ func new_node() :
 	add_child(n)
 	# connect selection event
 	n.connect("node_selected", get_parent().info_panel.set_node)
+	n.freeze = pause_simulation
 	return n
 
 func add_sim_node(new_position):

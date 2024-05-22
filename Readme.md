@@ -11,7 +11,6 @@ TODO :
 - A panel for node categories, with common values, shared at creation and modified simultanously
 
 BUG :
-- when creating a node while in pause, the node is not affected by the pause state.
 - When tapping the shortcuts for a Ctrl+Key action, the <Key> action is executed as well as the CTRL action.
 
 Default shortcuts (QWERTY configuration) :
