@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cgvlf22a30nqd"]
+[gd_scene load_steps=7 format=3 uid="uid://cgvlf22a30nqd"]
 
 [ext_resource type="Texture2D" uid="uid://dugi8g610plyl" path="res://Ressources/circle.png" id="2"]
 [ext_resource type="Script" path="res://Script/RigidNode.gd" id="3"]
+[ext_resource type="Texture2D" uid="uid://13ndum0jvmoy" path="res://Ressources/radiance.png" id="3_qk8pq"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_t3x5a"]
 bounce = 0.11
@@ -10,7 +11,7 @@ bounce = 0.11
 radius = 32.9035
 
 [sub_resource type="CircleShape2D" id="2"]
-radius = 400.0
+radius = 200.0
 
 [node name="RigidNode" type="RigidBody2D"]
 physics_material_override = SubResource("PhysicsMaterial_t3x5a")
@@ -28,11 +29,38 @@ offset_bottom = 30.0
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2")
 
+[node name="FixedSprite" type="Node2D" parent="Sprite2D"]
+visible = false
+z_index = -1
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D/FixedSprite"]
+self_modulate = Color(0.313726, 0.313726, 0.313726, 1)
+position = Vector2(-23, -23)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D/FixedSprite"]
+self_modulate = Color(0.313726, 0.313726, 0.313726, 1)
+position = Vector2(23, -23)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Sprite2D/FixedSprite"]
+self_modulate = Color(0.313726, 0.313726, 0.313726, 1)
+position = Vector2(-23, 23)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2")
+
+[node name="Sprite2D4" type="Sprite2D" parent="Sprite2D/FixedSprite"]
+self_modulate = Color(0.313726, 0.313726, 0.313726, 1)
+position = Vector2(23, 23)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("1")
 
 [node name="Area2D" type="Area2D" parent="."]
-visible = false
 gravity_space_override = 1
 gravity_point = true
 gravity_point_unit_distance = 30.0
@@ -44,5 +72,10 @@ linear_damp = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("2")
+
+[node name="radiance" type="Sprite2D" parent="Area2D"]
+z_index = -5
+scale = Vector2(1.6, 1.6)
+texture = ExtResource("3_qk8pq")
 
 [connection signal="gui_input" from="Control" to="." method="_on_Control_gui_input"]

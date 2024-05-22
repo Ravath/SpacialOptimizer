@@ -16,6 +16,13 @@ var center_forces = []
 func _ready():
 	pass # Replace with function body.
 
+func get_by_node_name(nm) :
+	for n in nodes :
+		if n.node_name == nm :
+			return n
+	if $Center.node_name == nm :
+		return $Center
+
 func _draw():
 	for f in forces:
 		# draw the force (green=attraction / red=repulsion)
@@ -36,12 +43,20 @@ func _process(_delta):
 
 func swap_pause() :
 	pause_simulation = !pause_simulation
+	for n in nodes :
+		n.freeze = pause_simulation
 
-func add_sim_node(new_position):
+func new_node() :
 	var n = $TemplateNode.duplicate(DUPLICATE_SIGNALS|DUPLICATE_GROUPS|DUPLICATE_SCRIPTS|DUPLICATE_USE_INSTANTIATION)
 	n.visible = true
-	n.set_position(new_position)
 	add_child(n)
+	# connect selection event
+	n.connect("node_selected", get_parent().info_panel.set_node)
+	return n
+
+func add_sim_node(new_position):
+	var n = new_node()
+	n.set_position(new_position)
 	nodes.append(n)
 	n.node_name = "RDN_" + str(nodes.size())
 	
@@ -49,21 +64,26 @@ func add_sim_node(new_position):
 	if get_node_or_null("Center") :
 		center_forces.append(RigidForce.new($Center, n, int(float(VITESSE*MAX_FORCE) / 50)))
 	
-	# connect selection event
-	n.connect("node_selected", get_parent().info_panel.set_node)
-	
 	return n
 
+func get_node_from_model(node_model) :
+	var dupl_node = add_sim_node(node_model.position + Vector2(2,2))
+	dupl_node.set_color(node_model.color)
+	dupl_node.set_size(node_model.size)
+	dupl_node.set_fixed(node_model.fixed)
+	dupl_node.set_gravity(node_model.get_gravity())
+	return dupl_node
+
 func duplicate_node(node_model) :
-	var new_node = add_sim_node(node_model.position + Vector2(2,2))
+	var dupl_node = get_node_from_model(node_model)
+	dupl_node.node_name = node_model.node_name + "_D"
 	# copy forces
 	for f in node_model.forces :
-		add_force(new_node, f.other(node_model), f.force/VITESSE)
+		add_force(dupl_node, f.other(node_model), f.force/VITESSE)
 	# add repulsive forces for them to be 'distinct'
-	add_force(new_node, node_model, -5)
+	add_force(dupl_node, node_model, -5)
 
 func split_node(node_model) :
-	# TODO : if forces are <= 2 : trivial
 	var clock = []
 	var misc = []
 	for f in node_model.forces :
@@ -76,25 +96,27 @@ func split_node(node_model) :
 	if clock.size() <= 1 :
 		pass
 	elif clock.size() == 2 :
-		var new_node = add_sim_node(node_model.position + Vector2(2,2))
+		var split_node = get_node_from_model(node_model)
+		split_node.node_name = node_model.node_name + "_S"
 		# copy repulsive and center forces
 		for f in misc :
 			if f.force < 0 :
-				add_force(new_node, f.other(node_model), f.force/VITESSE)
+				add_force(split_node, f.other(node_model), f.force/VITESSE)
 		# one attractive force for each
 		var permute = clock[0][1]
-		permute.change(node_model, new_node)
+		permute.change(node_model, split_node)
 	else :
 		var si = find_best_split_index(clock)
-		var new_node = add_sim_node(node_model.position + Vector2(2,2))
+		var split_node = get_node_from_model(node_model)
+		split_node.node_name = node_model.node_name + "_S"
 		# copy repulsive and center forces
 		for f in misc :
 			if f.force < 0 :
-				add_force(new_node, f.other(node_model), f.force/VITESSE)
+				add_force(split_node, f.other(node_model), f.force/VITESSE)
 		# one attractive force for each
 		for i in range(0,si) :
 			var permute = clock[i][1]
-			permute.change(node_model, new_node)
+			permute.change(node_model, split_node)
 
 func find_best_split_index(clock) :
 	clock.sort_custom(func custom_comparison(a,b) : return a[0] < b[0])
@@ -213,3 +235,14 @@ func create_test_nodes():
 				tn = nodes[rng.randi() % nodes.size()]
 			add_force(n, tn, rng.randi_range(MIN_FORCE, -1))
 			nbrFoes -= 1
+
+func _on_reset_gravity_pressed():
+	for n in nodes :
+		n.set_gravity(0)
+	$Center.set_gravity(0)
+
+
+func _on_general_gravity_value_changed(value):
+	for n in nodes :
+		n.set_gravity(value)
+	$Center.set_gravity(value)

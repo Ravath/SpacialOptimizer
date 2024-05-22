@@ -93,3 +93,12 @@ func apply_forces():
 		print("should be")
 	else:
 		node.apply_impulse(-1 * vf, Vector2.ZERO)
+
+func save() :
+	var save_dict = {
+		"force" : force,
+		"targetA" : targetA.node_name,
+		"targetB" : targetB.node_name,
+	}
+	return save_dict
+

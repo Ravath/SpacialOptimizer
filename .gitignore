@@ -3,3 +3,6 @@
 .godot/
 .mono/
 Release/
+*.import
+*.tmp
+*~
