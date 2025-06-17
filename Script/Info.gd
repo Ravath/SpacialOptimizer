@@ -17,7 +17,7 @@ func set_node(node) :
 	current_node = node
 	nameLabel.text = node.node_name
 	$Panel/VBoxContainer/size_slide.value = node.size * 10
-	$Panel/VBoxContainer/gravity_slide.value = node.get_gravity()
+	$Panel/VBoxContainer/gravity_slide.value = node.get_gravity_area()
 	$Panel/VBoxContainer/node_color.color = node.color
 	$Panel/VBoxContainer/fixed_button.button_pressed = node.fixed
 	forcesLabel.text = ""

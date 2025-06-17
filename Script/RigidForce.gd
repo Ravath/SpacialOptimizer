@@ -101,4 +101,3 @@ func save() :
 		"targetB" : targetB.node_name,
 	}
 	return save_dict
-

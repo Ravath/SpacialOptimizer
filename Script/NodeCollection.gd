@@ -72,7 +72,7 @@ func get_node_from_model(node_model) :
 	dupl_node.set_color(node_model.color)
 	dupl_node.set_size(node_model.size)
 	dupl_node.set_fixed(node_model.fixed)
-	dupl_node.set_gravity(node_model.get_gravity())
+	dupl_node.set_gravity(node_model.get_gravity_area())
 	return dupl_node
 
 func duplicate_node(node_model) :

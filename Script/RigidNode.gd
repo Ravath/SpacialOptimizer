@@ -29,7 +29,7 @@ func _ready():
 	set_size(size)
 	set_color(color)
 	set_fixed(fixed)
-	set_gravity(get_gravity())
+	set_gravity(get_gravity_area())
 
 func set_size(new_size) :
 	size = new_size
@@ -49,12 +49,14 @@ func set_fixed(new_fixed) :
 	fixed_position = position
 	$Sprite2D/FixedSprite.visible = fixed
 
-func get_gravity() :
+func get_gravity_area() :
 	return $Area2D.gravity
 
 const MAX_G = 2000
 const MIN_G = 2000
 func set_gravity(new_gravity) :
+	print(new_gravity)
+	print($Area2D.gravity)
 	$Area2D.gravity = new_gravity
 	var red   = 1 * -new_gravity / MAX_G if (new_gravity < 0) else 0
 	var green = 1 *  new_gravity / MAX_G if (new_gravity > 0) else 0
@@ -92,7 +94,7 @@ func save() :
 		"position_x" : position.x,
 		"position_y" : position.y,
 		"size" : size,
-		"gravity" : get_gravity(),
+		"gravity" : get_gravity_area(),
 		"color" : color.to_html(),
 		"fixed" : fixed
 	}
@@ -105,4 +107,3 @@ func load(load_dict) :
 	set_gravity(load_dict["gravity"])
 	set_color(Color(load_dict["color"]))
 	set_fixed(load_dict["fixed"])
-
