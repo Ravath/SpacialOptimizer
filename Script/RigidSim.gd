@@ -10,7 +10,15 @@ var text_writing = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	info_panel.display_pause($NodeCollection.pause_simulation)
+	# for test, load a graph from script
+	load_script("./Script/Graphs/PlaneteCrafter.g")
 	pass
+
+func load_script(scriptpath):
+	print("Open graph file : ", scriptpath)
+	var file = FileAccess.open(scriptpath, FileAccess.READ)
+	var content = file.get_as_text()
+	var graph = GraphParser.parse($NodeCollection, content)
 
 func _process(_delta) :
 	if not text_writing:

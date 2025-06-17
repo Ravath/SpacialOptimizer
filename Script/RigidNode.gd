@@ -55,8 +55,6 @@ func get_gravity_area() :
 const MAX_G = 2000
 const MIN_G = 2000
 func set_gravity(new_gravity) :
-	print(new_gravity)
-	print($Area2D.gravity)
 	$Area2D.gravity = new_gravity
 	var red   = 1 * -new_gravity / MAX_G if (new_gravity < 0) else 0
 	var green = 1 *  new_gravity / MAX_G if (new_gravity > 0) else 0

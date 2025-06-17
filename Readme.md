@@ -1,6 +1,6 @@
 A tool for optimizing the positioning of different elements.
 
-Currently using Godot 4.2
+Currently using Godot 4.3
 
 TODO :
 - Remove link functionality
@@ -25,3 +25,7 @@ Default shortcuts (QWERTY configuration) :
 - \<Space> : pause simulation
 - Ctrl+S : Save simulation
 - Ctrl+O : Load simulation
+
+Graph Script:
+	>COLOR_NAME
+	Node1:Pond+Node2:Pond>Node

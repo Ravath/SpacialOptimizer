@@ -97,27 +97,27 @@ func split_node(node_model) :
 	if clock.size() <= 1 :
 		pass
 	elif clock.size() == 2 :
-		var split_node = get_node_from_model(node_model)
-		split_node.node_name = node_model.node_name + "_S"
+		var splited_node = get_node_from_model(node_model)
+		splited_node.node_name = node_model.node_name + "_S"
 		# copy repulsive and center forces
 		for f in misc :
 			if f.force < 0 :
-				add_force(split_node, f.other(node_model), f.force/VITESSE)
+				add_force(splited_node, f.other(node_model), f.force/VITESSE)
 		# one attractive force for each
 		var permute = clock[0][1]
-		permute.change(node_model, split_node)
+		permute.change(node_model, splited_node)
 	else :
 		var si = find_best_split_index(clock)
-		var split_node = get_node_from_model(node_model)
-		split_node.node_name = node_model.node_name + "_S"
+		var splited_node = get_node_from_model(node_model)
+		splited_node.node_name = node_model.node_name + "_S"
 		# copy repulsive and center forces
 		for f in misc :
 			if f.force < 0 :
-				add_force(split_node, f.other(node_model), f.force/VITESSE)
+				add_force(splited_node, f.other(node_model), f.force/VITESSE)
 		# one attractive force for each
 		for i in range(0,si) :
 			var permute = clock[i][1]
-			permute.change(node_model, split_node)
+			permute.change(node_model, splited_node)
 
 func find_best_split_index(clock) :
 	clock.sort_custom(func custom_comparison(a,b) : return a[0] < b[0])
